@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>AI Phishing URL Detector</title>
+
+<style>
+
+body{
+background:#0f172a;
+color:white;
+font-family:Arial,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+margin:0;
+}
+
+.container{
+background:#1e293b;
+padding:40px;
+width:1000px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 0 25px rgba(0,255,255,0.2);
+}
+
+h1{
+color:#38bdf8;
+}
+
+.stats{
+display:flex;
+justify-content:space-between;
+margin:25px 0;
+gap:15px;
+}
+
+.card{
+flex:1;
+padding:20px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.total{
+background:#1e40af;
+}
+
+.safe-card{
+background:#14532d;
+}
+
+.danger-card{
+background:#7f1d1d;
+}
+
+input{
+width:70%;
+padding:12px;
+border-radius:8px;
+border:none;
+font-size:16px;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:8px;
+background:#2563eb;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.clear-btn{
+background:#dc2626;
+margin-left:10px;
+}
+
+.clear-btn:hover{
+background:#b91c1c;
+}
+
+.safe{
+margin-top:20px;
+padding:15px;
+background:#14532d;
+color:#86efac;
+border-radius:10px;
+font-weight:bold;
+}
+
+.danger{
+margin-top:20px;
+padding:15px;
+background:#7f1d1d;
+color:#fca5a5;
+border-radius:10px;
+font-weight:bold;
+}
+
+.confidence{
+margin-top:15px;
+color:#facc15;
+font-size:20px;
+font-weight:bold;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+th{
+background:#334155;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid #475569;
+}
+
+tr:hover{
+background:#334155;
+}
+
+a{
+text-decoration:none;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔐 AI Phishing URL Detector</h1>
+
+<p>Enter a URL to check whether it is safe or phishing.</p>
+
+<div class="stats">
+
+<div class="card total">
+<h3>Total Scans</h3>
+<h2>{{ total_scans }}</h2>
+</div>
+
+<div class="card safe-card">
+<h3>Safe URLs</h3>
+<h2>{{ safe_count }}</h2>
+</div>
+
+<div class="card danger-card">
+<h3>Phishing URLs</h3>
+<h2>{{ phishing_count }}</h2>
+</div>
+
+</div>
+
+<form method="POST">
+
+<input
+type="text"
+name="url"
+placeholder="https://example.com"
+required>
+
+<button type="submit">
+Check URL
+</button>
+
+<button class="clear-btn">
+<a href="/clear">Clear History</a>
+</button>
+
+</form>
+
+{% if result %}
+
+{% if "Safe" in result %}
+
+<div class="safe">
+{{ result }}
+</div>
+{% else %}
+<div class="danger">
+{{ result }}
+</div>
+{% endif %}
+
+<div class="confidence">
+Confidence: {{ confidence }}%
+</div>
+
+{% endif %}
+
+{% if history %}
+
+<h2 style="margin-top:40px;">
+📊 Detection History
+</h2>
+
+<table>
+
+<tr>
+<th>URL</th>
+<th>Result</th>
+<th>Confidence</th>
+<th>Timestamp</th>
+</tr>
+
+{% for item in history %}
+
+<tr>
+<td>{{ item.url }}</td>
+<td>{{ item.result }}</td>
+<td>{{ item.confidence }}%</td>
+<td>{{ item.timestamp }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+</div>
+
+</body
+</html>
